@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) 
     {
-        // declaring an unordered map that will store all angrams for a particular string
+        // declaring an map that will store all angrams for a particular string
         // mp[ate] = [ate,eat,tea]   here (string = ate & vector<string> = [ate,eat,tea])
         
         map<string,vector<string>> mp;
