@@ -1,4 +1,4 @@
-// Using Tabulation (WithOut Optimizing Space Complexity)
+// Using Tabulation (With Optimizing Space Complexity)
 class Solution 
 {
 public:
@@ -8,21 +8,19 @@ public:
         {
             return 1;
         }
-        
-        vector<int> dp(n+1,-1);
-        
-        if(dp[n] != -1)
-            return dp[n];
-        
+    
         // start with base cases
-        dp[0] = 1;
-        dp[1] = 1;
+        int prev1 = 1;
+        int prev2 = 1;
+        int curr  = 0;
         
         // and doing calculation till n
         for(int i=2;i<=n;i++)
         {
-            dp[i] = dp[i-1] + dp[i-2];
+            curr = prev1 + prev2;
+            prev2 = prev1;
+            prev1 = curr;
         }
-        return dp[n];
+        return curr;
     }
 };
