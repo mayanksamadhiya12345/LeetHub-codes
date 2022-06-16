@@ -3,21 +3,17 @@ public:
     // kadane's algorithm
     int maxSubArray(vector<int>& nums) 
     {
-        int current_sum=0;         // for storing the current sum
-        int maxsum=INT_MIN;        // for storing the max sum
+        int mx = INT_MIN;
+        int curr = 0;
         
-        // iterating over the nums for finding max sum
-        for(int i=0;i<nums.size();i++)
+        for(auto x : nums)
         {
-            current_sum=current_sum+nums[i];        // adding current value
-            maxsum=max(maxsum,current_sum);         // finding max by using max function
+            curr += x;
+            mx = max(mx,curr);
             
-            // if any point of time our curr_sum gets negative then make it 0 
-            if(current_sum<0)
-            {
-                current_sum=0;
-            }  
-        }   
-        return maxsum;
+            if(curr < 0)
+                curr = 0;
+        }
+        return mx;
     }
 };
