@@ -5,82 +5,66 @@ using namespace std;
 
  // } Driver Code Ends
 class Solution{
-    public:
-        //Function to merge the arrays.
-        void swap(long long* a, long long* b)
+public:
+    //Function to merge the arrays.
+    void swap(long long* a, long long* b)
+    {
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+
+    void merge(long long arr1[], long long arr2[], int n1, int n2)
+    {
+        int gap = n1+n2;
+        gap = gap/2 + gap%2;
+        
+        int i = 0;
+        int j = gap;
+        
+        while(gap >= 1)
         {
-            int temp = *a;
-            *a = *b;
-            *b = temp;
+            if(j<n1+n2)
+            {
+                if(i<n1 && j<n1)
+                {
+                    if(arr1[i] > arr1[j])
+                        swap(&arr1[i],&arr1[j]);
+                    i++;
+                    j++;
+                }
+                
+                if(i>=n1 && j>=n1)
+                {
+                    if(arr2[i-n1] > arr2[j-n1])
+                        swap(&arr2[i-n1],&arr2[j-n1]);
+                    i++;
+                    j++;
+                }
+                
+                if(i<n1 && j>=n1)
+                {
+                    if(arr1[i] > arr2[j-n1])
+                        swap(&arr1[i],&arr2[j-n1]);
+                    i++;
+                    j++;
+                }
+            }
+            else
+            {
+                if(gap > 1)
+                {
+                    gap = (gap/2) + (gap%2);
+                    i = 0;
+                    j = gap;
+                }
+                else
+                {
+                    gap = 0;
+                }
+            }
         }
-
-void merge(long long arr1[], long long arr2[], int n1, int n2)
-{
-    // using the gap method 
-	int gap = n1+n2;
-	gap = gap/2+gap%2;
-	
-	// using two pointer approach
-	int i=0;
-	int j=gap;
-	
-	// go only when gap is more than 0
-	while(gap>=1)
-	{
-	    // creted the boundary
-		if(j<n1+n2)
-		{
-		    // when both the pointer in the first array
-			if(i<n1 && j<n1)
-			{
-				if(arr1[i]>arr1[j])
-					swap(&arr1[i], &arr1[j]);
-				i++;
-				j++;
-				
-			}
-			
-			// when both the pointer in the second array
-			if(i>=n1 && j>=n1)
-			{
-				if(arr2[i-n1]>arr2[j-n1])
-					swap(&arr2[i-n1], &arr2[j-n1]);
-				i++;
-				j++;
-
-			}
-			
-			// when first pointer in the first and second pointer in second array
-			if(i<n1 && j>=n1)
-			{
-				if(arr1[i]>arr2[j-n1])
-					swap(&arr1[i], &arr2[j-n1]);
-				i++;
-				j++;
-				
-			}
-			
-		}
-		
-		// outside the boundary means array
-		else
-		{
-		    // updating the gap value for repeating the iteration
-			if(gap>1)
-			{
-				gap=(gap/2)+(gap%2);
-				i=0;
-				j=gap;
-			}
-			
-			// if gap is zero it means our arrays are sorted
-			else
-			{
-				gap=0;
-			}
-		}
-	}
-}
+    }
 };
 
 // { Driver Code Starts.
