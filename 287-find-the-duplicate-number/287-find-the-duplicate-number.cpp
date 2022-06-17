@@ -1,27 +1,19 @@
-class Solution 
-{
+class Solution {
 public:
-    int findDuplicate(vector<int>& nums)
+    int findDuplicate(vector<int>& nums) 
     {
-        // Tortoise method 
-        // slow fast pointer approach
-        
-        int slow = nums[0];
-        int fast = nums[0];
-        
-        do
+        map<int,int> mp;
+        for(int i=0;i<nums.size();i++)
         {
-            slow = nums[slow];
-            fast = nums[nums[fast]];
-        } 
-        while (slow != fast);
-        
-        fast = nums[0];
-        while(slow != fast) 
-        {
-            slow = nums[slow];
-            fast = nums[fast];
+            mp[nums[i]]++;
         }
-        return fast;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(mp[i]>1)
+            {
+                return i;
+            }
+        }
+        return 0;
     }
 };
