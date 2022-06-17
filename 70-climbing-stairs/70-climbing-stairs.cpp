@@ -15,12 +15,12 @@ public:
         int curr  = 0;
         
         // and doing calculation till n
-        for(int i=2;i<=n;i++)
+        for(int i=1;i<n;i++)
         {
             curr = prev1 + prev2;
             prev2 = prev1;
             prev1 = curr;
         }
-        return curr;
+        return prev1;
     }
 };
