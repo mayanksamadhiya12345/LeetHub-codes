@@ -1,36 +1,46 @@
 class Solution 
 {
 public:
-    int help(int i,int j,vector<vector<int>> &matrix,vector<vector<int>>& dp)
-    {
-        // edge cases
-        // if our column crosses the boundary
-        if(j<0 or j>=matrix.size())
-            return 1e9;                         // to avoid overflow i used 1e9 instead of INT_MAX
-        
-        // if we reached to our 0th row then return the value for of current column
-        if(i==0)
-            return matrix[i][j];
-        
-        if(dp[i][j]!=-1)
-            return dp[i][j];
-        
-        // I can move in three directions
-        int up = matrix[i][j] + help(i-1,j,matrix,dp);
-        int up_left = matrix[i][j] + help(i-1,j-1,matrix,dp);
-        int up_right = matrix[i][j] + help(i-1,j+1,matrix,dp);
-        
-        return dp[i][j] = min(up,min(up_left,up_right));                       // return the minimum out of them
-    }
-    
+
     int minFallingPathSum(vector<vector<int>>& matrix) 
     {
         int n = matrix.size();
-        vector<vector<int>> dp(n,vector<int> (n,-1));
+        vector<vector<int>> dp(n,vector<int> (n,0));
+        
+        // base cases
+        for(int j=0;j<n;j++)
+        {
+            dp[0][j] = matrix[0][j];
+        }
+        
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                int up = matrix[i][j] + dp[i-1][j];
+                
+                int up_left = matrix[i][j];
+                if(j-1>=0)
+                    up_left += dp[i-1][j-1];
+                else
+                    up_left += 1e9;
+                
+                
+                int up_right = matrix[i][j];
+                if(j+1<n)
+                    up_right += dp[i-1][j+1];
+                else
+                    up_right += 1e9;
+                
+                dp[i][j] = min(up,min(up_left,up_right));
+            }
+        }
+        
+        
         int mn = INT_MAX;
         for(int j=0;j<n;j++)
         {
-            mn = min(mn,help(n-1,j,matrix,dp));
+            mn = min(mn,dp[n-1][j]);
         }
         
         return mn;
