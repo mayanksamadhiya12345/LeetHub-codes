@@ -12,68 +12,55 @@ class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) 
     {       
-        //3 pointer approach(like merge sort)
-        //if any one of the LinkedList is NULL or both are null
         if(l1==NULL)
             return l2;
         if(l2==NULL)
             return l1;
         
-        //if both contains elements: ready three pointers
-        //one for the final LinkedList in that we gonna merge both and 2 for comparing the given LL  (head,l1,l2) 
-         
-        ListNode* head = NULL;    //this will help to return head as ans
-        ListNode* i = NULL;       //help in iteration or making the final LinkedList
-    
-        // find out which first element is lesser out of l1 and l2 
-        // and after finding, assign it to head and also for i for iteration
-        if(l1->val <= l2->val)
-        {     
-            head = l1;          //head: used as a head for Final LL
-            l1 = l1->next;      //L1 pointer
-        }        
+        ListNode* ans = NULL;
+        ListNode* itr = ans;
+        
+        if(l1->val<=l2->val)
+        {
+            ans = l1;
+            l1 = l1->next;
+        }
+        
         else
         {
-            head = l2;
-            l2 = l2->next;      //L2 pointer
+            ans = l2;
+            l2 = l2->next;
         }
-        i = head;               // also assign for i for iteration 
+        itr = ans;
         
-        
-        //compare and store elements in ascending order by comaparison L1 & L2
         while(l1!=NULL && l2!=NULL)
         {
-            if(l1->val <= l2->val)
+            if(l1->val<=l2->val)
             {
-                i->next = l1;
-                i = i->next;
+                itr->next = l1;
                 l1 = l1->next;
+                itr = itr->next;
             }
-                
-            
             else
             {
-                i->next = l2;
-                i = i->next;
+                itr->next = l2;
                 l2 = l2->next;
+                itr = itr->next;
             }
         }
         
-        //if any Linkedlist remains empty
         while(l1!=NULL)
         {
-            i->next = l1;
-            i  = i->next;
+            itr->next = l1;
             l1 = l1->next;
+            itr = itr->next;
         }
         while(l2!=NULL)
         {
-            i->next = l2;
-            i  = i->next;
+            itr->next = l2;
             l2 = l2->next;
+            itr = itr->next;
         }
-        
-        return head;
-                
+        return ans;
     }
 };
