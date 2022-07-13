@@ -5,9 +5,20 @@ public:
         if(s.length() != t.length())
             return false;
         
-        sort(s.begin(),s.end());
-        sort(t.begin(),t.end());
+        map<char,int> mp;
         
-        return s==t;
+        for(auto i:s)
+        {
+            mp[i]++;
+        }
+        
+        for(auto i:t)
+        {
+            if(mp[i]==0)
+                return false;
+            else
+                mp[i]--;
+        }
+        return true;
     }
 };
