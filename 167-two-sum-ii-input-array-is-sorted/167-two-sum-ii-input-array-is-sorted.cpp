@@ -11,7 +11,7 @@ public:
             // after getting our target value break it
             if(numbers[left]+numbers[right]==target)
             {
-                break;
+                return {left+1,right+1};
             }
             
             // if current sum is lower than target , so we need to maximize it , so move left pointer towards the right
@@ -27,6 +27,6 @@ public:
             }
         }
         
-        return {left+1,right+1};
+        return {-1,-1};
     }
 };
