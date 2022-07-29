@@ -18,7 +18,7 @@ public:
             return l1;
         
         ListNode* ans = NULL;
-        ListNode* itr = ans;
+        
         
         if(l1->val<=l2->val)
         {
@@ -31,7 +31,7 @@ public:
             ans = l2;
             l2 = l2->next;
         }
-        itr = ans;
+        ListNode* itr = ans;
         
         while(l1!=NULL && l2!=NULL)
         {
