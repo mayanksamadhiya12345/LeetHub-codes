@@ -1,38 +1,34 @@
 class Solution {
 public:
-    int find(int idx,vector<int>& num,int target,vector<vector<int>>& dp)
-    {
-        // if i am at index 0 then i will check
-        // my 0th value is making my target or not if it is then add those no. 
-        // else return a big number so we can avoid that in min() function
-        if(idx==0)
-        {
-            if(target%num[0]==0)
-                return target/num[0];
-            else
-                return 1e9;
-        }
-
-        if(dp[idx][target]!=-1)
-            return dp[idx][target];
-
-        // not pick
-        int not_pick = 0 + find(idx-1,num,target,dp);
-
-        // pick
-        int pick = INT_MAX;
-        if(target>=num[idx])
-            pick = 1 + find(idx,num,target-num[idx],dp);
-
-        return dp[idx][target] = min(not_pick,pick);
-    }
     
     // knapsack problem
     int coinChange(vector<int>& num, int x) 
     {
         int n=num.size();
-        vector<vector<int>> dp(n,vector<int> (x+1,-1));
-        int ans = find(n-1,num,x,dp);
+        vector<vector<int>> dp(n,vector<int> (x+1,0));
+
+        // base case
+        for(int i=0;i<=x;i++)
+        {
+            if(i%num[0]==0)
+                dp[0][i] = i/num[0];
+            else
+                dp[0][i]=1e9;
+        }
+
+        for(int i=1;i<n;i++)
+        {
+            for(int target=0;target<=x;target++)
+            {
+                int not_pick = 0+dp[i-1][target];
+                int pick = INT_MAX;
+                if(target>=num[i])
+                    pick = 1+dp[i][target-num[i]];
+
+                dp[i][target]=min(pick,not_pick);
+            }
+        }
+        int ans=dp[n-1][x];
         if(ans>=1e9)
             return -1;
         return ans;
