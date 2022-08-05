@@ -1,43 +1,40 @@
 class Solution {
 public:
-    // knapsack problem
-    int coinChange(vector<int>& coins, int amount) 
+    int find(int idx,vector<int>& num,int target,vector<vector<int>>& dp)
     {
-        int n = coins.size();
-        
-        // creating a dp that is having (coins size rows and amount size columns)
-        // and assigning whole dp value INT_MAX initially because we need to return min value
-        vector<vector<int>> dp(n+1, vector<int> (amount+1, 1e5));          // taking +1 because we there is 0 based indexing
-        
-        // just start to fill our dp
-        // iterate over coins
-        for(int i=0;i<=n;i++)
+        // if i am at index 0 then i will check
+        // my 0th value is making my target or not if it is then add those no. 
+        // else return a big number so we can avoid that in min() function
+        if(idx==0)
         {
-            // iterate over amount
-            for(int j=0;j<=amount;j++)
-            {
-                // if my current amount is zero it means we need 0 coin to reach target
-                if(j==0)
-                    dp[i][j]=0;
-                    
-                // if my coin value is 0 then we need infinite coins to achieve target
-                else if(i==0)
-                    dp[i][j]=1e5;
-                
-                // if current coin value is bigger then the current amount then store previous row value
-                else if(coins[i-1]>j)
-                    dp[i][j]=dp[i-1][j];
-                
-                // it will count the min coin numbers to achiveve current target value by using available coins
-                // and store the min one that we can use for storing the amount value
-                // we are using +1 for taking current coin and check for remaining amount (j-coins[i-1]) in same row(i)
-                else
-                    dp[i][j] = min(1+dp[i][j-coins[i-1]], dp[i-1][j]);
-            }   
+            if(target%num[0]==0)
+                return target/num[0];
+            else
+                return 1e9;
         }
-        
-        // if my last cell is having greater than 1e4 it means we can not reach the given amount by using given coins array
-        // if it last cell is heving some finite value then return it
-        return dp[n][amount] > 1e4 ? -1 : dp[n][amount];
+
+        if(dp[idx][target]!=-1)
+            return dp[idx][target];
+
+        // not pick
+        int not_pick = 0 + find(idx-1,num,target,dp);
+
+        // pick
+        int pick = INT_MAX;
+        if(target>=num[idx])
+            pick = 1 + find(idx,num,target-num[idx],dp);
+
+        return dp[idx][target] = min(not_pick,pick);
+    }
+    
+    // knapsack problem
+    int coinChange(vector<int>& num, int x) 
+    {
+        int n=num.size();
+        vector<vector<int>> dp(n,vector<int> (x+1,-1));
+        int ans = find(n-1,num,x,dp);
+        if(ans>=1e9)
+            return -1;
+        return ans;
     }
 };
