@@ -3,8 +3,8 @@ public:
     int maxProfit(vector<int>& prices) 
     {
         int n = prices.size();
-        vector<int> ahead(n+1,0);
-        vector<int> curr(n+1,0);
+        vector<int> ahead(2,0);
+        vector<int> curr(2,0);
         
         // base case
         ahead[0] = ahead[1] = 0;                                    // also skip this portion as we declare our dp as 0
