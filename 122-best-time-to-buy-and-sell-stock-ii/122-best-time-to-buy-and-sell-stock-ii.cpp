@@ -4,7 +4,6 @@ public:
     {
         int n = prices.size();
         vector<int> ahead(2,0);
-        vector<int> curr(2,0);
         
         // base case
         ahead[0] = ahead[1] = 0;                                    // also skip this portion as we declare our dp as 0
@@ -23,9 +22,8 @@ public:
                     profit = max(prices[idx]+ahead[1],0+ahead[0]);
                 }
                 
-                curr[buy] = profit;
+                ahead[buy] = profit;
             }
-            ahead = curr;
         }
         
         return ahead[1];
