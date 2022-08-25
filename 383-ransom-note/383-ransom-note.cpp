@@ -5,6 +5,9 @@ public:
         // declared map for storing the occurance of characters
         map<char,int> mp;
         
+        if(ransomNote.length()>magazine.length())
+            return false;
+        
         // storing the magazine string characters occurance because it is super-set here
         for(int i=0;i<magazine.length();i++)
         {
