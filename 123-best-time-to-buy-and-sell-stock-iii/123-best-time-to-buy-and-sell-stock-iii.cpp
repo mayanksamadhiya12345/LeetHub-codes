@@ -24,7 +24,35 @@ public:
     int maxProfit(vector<int>& prices) 
     {
         int n = prices.size();
-        vector<vector<vector<int>>> dp(n, vector<vector<int>>(2, vector<int>(3, -1)));
-        return find(0,1,2,prices,n,dp);
+        vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(2, vector<int>(3, 0)));
+        
+        // base cases, assign 0 
+        // when cap==0 and idx and buy can anything
+        // when idx==n and cap and buy can anything
+        // there is no need to thse write cases because we already define our dp as 0
+        
+        for(int idx=n-1;idx>=0;idx--)
+        {
+            for(int buy=0;buy<=1;buy++)
+            {
+                for(int cap=1;cap<=2;cap++)
+                {
+                    int profit=0;
+                    // can buy
+                    if(buy==1)
+                    {
+                                    // buy                                   // not buy
+                        dp[idx][buy][cap] = max(-prices[idx]+dp[idx+1][0][cap],0+dp[idx+1][1][cap]);
+                    }
+                    else
+                    {
+                                  // sell                                    // not sell
+                        dp[idx][buy][cap] = max(prices[idx]+dp[idx+1][1][cap-1],0+dp[idx+1][0][cap]);
+                    }
+                }
+            }
+        }
+        
+        return dp[0][1][2];
     }
 };
