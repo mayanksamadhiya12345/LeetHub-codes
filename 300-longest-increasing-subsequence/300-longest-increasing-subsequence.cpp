@@ -13,10 +13,9 @@ public:
                 if(nums[prev]<nums[idx])
                 {
                     dp[idx] = max(dp[idx],1+dp[prev]);
-                    if(dp[idx]>mx)
-                        mx=dp[idx];
                 }
             }
+            mx = max(mx,dp[idx]);
         }
         return mx;
     }
