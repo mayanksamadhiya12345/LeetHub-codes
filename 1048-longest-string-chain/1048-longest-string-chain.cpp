@@ -1,6 +1,30 @@
 class Solution {
 public:
     
+    bool check(string &s1,string &s2)
+    {
+        if(s1.size() != s2.size()+1) return false;
+        
+        int i=0;
+        int j=0;
+        
+        while(i<s1.size())
+        {
+            if(s1[i]==s2[j])
+            {
+                i++;
+                j++;
+            }
+            else
+            {
+                i++;
+            }
+        }
+        
+        if(i==s1.size() && j==s2.size()) return true;
+        return false;
+    }
+    
     // do compariosn based on size
     static bool compare(string s1, string s2)
     {
@@ -9,32 +33,23 @@ public:
     
     int longestStrChain(vector<string>& words) 
     {
-        //it will store predecessor word and their chain size
-        unordered_map<string, int> dp; 
+        int n = words.size();
+        sort(words.begin(),words.end(),compare);
+        vector<int> dp(n,1);
+        int mx  = 1;
         
-        //sort(words.begin(), words.end() based of the word size
-        sort(words.begin(), words.end(), compare);
-        
-        // initially word chain size will be 1
-        int len = 1; 
-        for(auto word:words)           // irerate over the given words 
+        for(int idx=0;idx<n;idx++)
         {
-            dp[word]=1;
-            
-            // check for the characters of current word
-            for(int i=0; i<word.length(); i++) 
+            for(int prev=0;prev<idx;prev++)
             {
-                //removing ith alphabet from the string and check remaining string is available in the dp 
-                string pred = word.substr(0,i) + word.substr(i+1); 
-                
-                // if it is available in dp then take that max len and go for next
-                if(dp.find(pred) != dp.end()) 
+                if(check(words[idx],words[prev]) && 1+dp[prev]>dp[idx])
                 {
-                    dp[word] = dp[pred]+1;                // updated
-                    len = max(len, dp[word]);             // storing max one
+                    dp[idx] = 1+dp[prev];
                 }
             }
+            mx = max(mx,dp[idx]);
         }
-        return len;    
+        
+        return mx;
     }
 };
