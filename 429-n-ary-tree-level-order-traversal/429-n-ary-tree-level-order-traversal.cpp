@@ -23,26 +23,28 @@ public:
     vector<vector<int>> levelOrder(Node* root) 
     {
         vector<vector<int>> ans;
-        
-        if(!root) return ans;
-        
-        queue<Node*> q;
+        if(root==NULL)                // if root is null then return empty vector
+            return ans;
+         
+        queue<Node*> q;           // make a queue data structure for BFS traversal for finding the level order
         q.push(root);
-        
+       
+        // BFS TRAVERSAL
         while(!q.empty())
         {
-            int size = q.size();
-            vector<int> level;
+            vector<int> level;       // for storing the levels 
+            int size = q.size();     // for storing the level size equal element
             
             for(int i=0;i<size;i++)
             {
-                auto it = q.front();
+                auto nod = q.front();      // takeout the front element
                 q.pop();
-                level.push_back(it->val);
+                level.push_back(nod->val);      // after calling the current value push it to the level vector
                 
-                for(auto nod : it->children)
+                // store the next level nodes in queue (just one condition change in level order traversal code)
+                for(auto it : nod->children)
                 {
-                    q.push(nod);
+                    q.push(it);
                 }
             }
             ans.push_back(level);
