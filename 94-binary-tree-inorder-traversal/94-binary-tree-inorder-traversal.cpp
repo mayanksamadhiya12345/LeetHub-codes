@@ -13,23 +13,21 @@ class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) 
     {
-        stack<TreeNode*> st; 
+        stack<TreeNode*> st;
         TreeNode* node = root;
-        vector<int> inorder; 
-     
+        vector<int> inorder;
+        
         while(true)
         {
-            if(node != NULL) 
+            if(node)
             {
-                st.push(node); 
-                node = node->left; 
+                st.push(node);
+                node = node->left;
             }
             else
             {
-                if(st.empty() == true)
-                {
-                    break;
-                }
+                if(st.empty()) break;
+                
                 node = st.top();
                 st.pop();
                 inorder.push_back(node->val);
@@ -39,7 +37,7 @@ public:
         return inorder;
     }
 };
-// iterative approach
+// using stack approach
 
 // Inorder Traversal 
 // Left -> Root -> Right
