@@ -12,16 +12,13 @@ public:
             if(nums[i]==0)
             {
                 zero++;
+                if(zero==2)
+                    return ans;
             }
             else
             {
                 product *= nums[i];
             }
-        }
-        
-        if(zero>=2)
-        {
-            return ans;
         }
         
         for(int i=0;i<n;i++)
