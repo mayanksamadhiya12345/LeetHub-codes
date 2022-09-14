@@ -3,7 +3,7 @@ public:
     vector<int> productExceptSelf(vector<int>& nums) 
     {
         int n=nums.size();
-        vector<int> ans(n);
+        vector<int> ans(n,0);
         int product=1;
         int zero=0;
         
@@ -19,13 +19,14 @@ public:
             }
         }
         
+        if(zero>=2)
+        {
+            return ans;
+        }
+        
         for(int i=0;i<n;i++)
         {
-            if(zero>=2)
-            {
-                ans[i]=0;
-            }
-            else if(zero==1)
+            if(zero==1)
             {
                 if(nums[i]==0)
                 {
